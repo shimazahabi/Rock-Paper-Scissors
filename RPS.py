@@ -2,17 +2,11 @@ from os import system, name
 import os
 import random
 
-def clearConsole():
-    # for windows
-    if name == 'nt':
-        _ = system('cls')
- 
-    # for mac and linux(here, os.name is 'posix')
-    else:
-        _ = system('clear')
-    
-def pressKey():
-    input("\nPress Enter to continue...")
+def clear_console():
+    if name == 'nt': # for windows
+        system('cls')
+    else: # for mac and linux(here, os.name is 'posix')
+        system('clear')
 
 os.system("")  # enables ansi escape characters in terminal
 
@@ -24,7 +18,7 @@ COLOR = {
     "ENDC": "\033[0m",
 }
 
-def winnerCheck(move1, move2):
+def winner_check(move1, move2):
     print(COLOR["GREEN"])
     
     if move1 == move2:
@@ -56,8 +50,8 @@ def winnerCheck(move1, move2):
         return 3
     print(COLOR["ENDC"])
 
-def playWithHum():
-    clearConsole()
+def play_with_hum():
+    clear_console()
 
     print("~ Rock...")
     print("~ Paper...")
@@ -73,10 +67,10 @@ def playWithHum():
         
         print(f"<< Player 1 : {player1_wins} and Player 2 : {player2_wins} >>\n")
         
-        Player_1 = input("Player_1 , Make your move : ").lower()
-        Player_2 = input("Player_2 , Make your move : ").lower()
+        player_1 = input("Player_1 , Make your move : ").lower()
+        player_2 = input("Player_2 , Make your move : ").lower()
         
-        winStatus = winnerCheck(Player_1, Player_2)
+        winStatus = winner_check(player_1, player_2)
         
         if winStatus == 1:
             player1_wins += 1
@@ -87,23 +81,24 @@ def playWithHum():
             
     print(f"FINAL SCORES : Player 1 : {player1_wins} and Player 2 : {player2_wins}", COLOR["ENDC"])
     
-    pressKey()
+    input("\nPress Enter to continue...")
     
-def computerMove():    
+def computer_move():    
     randomNumber = random.randint(0, 2)
-    move = ""
-
+    
     if randomNumber == 0:
         move = "rock"
     elif randomNumber == 1:
         move = "scissors"
     elif randomNumber == 2:
         move = "paper"
+    else:
+        move = ""
     
     return move
 
-def playWithCom():
-    clearConsole()
+def play_with_com():
+    clear_console()
     
     print("~ Rock...")
     print("~ Paper...")
@@ -114,16 +109,16 @@ def playWithCom():
     computer_wins = 0
     winning_score = 3
 
-    while player1_wins < winning_score and computer_wins < winning_score:
+    while player1_wins < winning_score > computer_wins:
         print(COLOR["BLUE"])
         
         print(f"<< Player 1 : {player1_wins} and Computer : {computer_wins} >>\n")
         
         Player_1 = input("| Player 1 , Make Your Move : ").lower()
-        Player_2 = computerMove()
+        Player_2 = computer_move()
         print(f"| Computer Move : {Player_2}")
         
-        winStatus = winnerCheck(Player_1, Player_2)
+        winStatus = winner_check(Player_1, Player_2)
         
         if winStatus == 1:
             player1_wins += 1
@@ -133,25 +128,25 @@ def playWithCom():
         print("+-----------------------------+")
 
     print(f"FINAL SCORES : Player 1 : {player1_wins} and Player 2 : {computer_wins}", COLOR["ENDC"])
-    pressKey()
+    input("\nPress Enter to continue...")
 
-def gameMenu():
+def game_menu():
     command = "0"
     
     while command != "3":
-        clearConsole()
+        clear_console()
         
         print(COLOR["GREEN"], "\t|<{ Game Menu }>|\t")
         print("Choose your opponent :")
         print("1- HUMAN \n2- COMPUTER \n3- RETURN", COLOR["ENDC"])
+        print("")
         
         command = input()
         if command == "1":
-            playWithHum()
+            play_with_hum()
         elif command == "2":
-            playWithCom()
+            play_with_com()
             
-    
 def info():
     print(COLOR["YELLOW"], "\t|<{ Information }>|\t\n")
     print("# Programmer -> Shima Zahabi")
@@ -162,21 +157,22 @@ def info():
     print("Game rule : Rock beats scissors, scissors beat paper, and paper beats rock.")
     print("In this game, winning score is 3", COLOR["ENDC"])
     
-    pressKey()
+    input("\nPress Enter to continue...")
 
-def mainMenu():
+def main():
     command = "0"
     
     while command != "3":
-        clearConsole()
+        clear_console()
         
         print(COLOR["BLUE"], "\t|<{ Rock Paper Scissors }>|\t")
         print("1- START A GAME \n2- INFORMATION \n3- EXIT", COLOR["ENDC"])
         
         command = input()
         if command == "1":
-            gameMenu()
+            game_menu()
         elif command == "2":
             info()
 
-mainMenu()
+if __name__ == "__main__":
+    main()
